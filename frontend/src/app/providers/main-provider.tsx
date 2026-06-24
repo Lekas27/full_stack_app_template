@@ -7,13 +7,17 @@ import { AuthProvider, useAuth } from "@/entities/auth/model/context";
 
 const queryClient = new QueryClient();
 
-export const MainProvider = () => {
+const InnerProvider = () => {
   const { isAuthenticated } = useAuth();
+  return <RouterProvider router={router} context={{ isAuthenticated }} />;
+};
+
+export const MainProvider = () => {
   return (
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-            <RouterProvider router={router} context={{ isAuthenticated }} />
+          <InnerProvider />
         </AuthProvider>
       </QueryClientProvider>
     </StrictMode>
